@@ -11,7 +11,7 @@ public:
     void printValueAtX(double x);
 
     friend void div(Polynomial &diviend, Polynomial &divisor, 
-                    map<int, double> &res, map<int, double> &remain);
+                    map<int, float> &res, map<int, float> &remain);
     //friend void printPolynomial(const map<int, double> &m);
 private:
     map<int, double> saved;
@@ -26,4 +26,4 @@ private:
     void derivation();
 };
 
-void printMap(const map<int, double> &m);
+void printMap(const map<int, float> &m);

@@ -5,7 +5,7 @@ int main()
 {
     //请打开文件目录修改Polynomial.h，Polynomial.cpp，和exercise_2.cpp
     /********** Begin **********/
-    bool exercise1 = true;
+    bool exercise1 = false;
     if (exercise1){
         //第一关执行代码
         string str;          
@@ -23,8 +23,8 @@ int main()
         getline(cin, divisor_s);
         Polynomial diviend(diviend_s);
         Polynomial divisor(divisor_s);
-        map<int, double> res;
-        map<int, double> remain;
+        map<int, float> res;
+        map<int, float> remain;
         //diviend.printPolynomial();
         //divisor.printPolynomial();
         div(diviend, divisor, res, remain);
