@@ -1,2 +1,2 @@
-# Arandomname
-Solution for Arandomname
+# SJTU-someclass
+Solutions for SJTU-someclass.
