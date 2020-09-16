@@ -25,12 +25,8 @@ int main()
         Polynomial divisor(divisor_s);
         map<int, float> res;
         map<int, float> remain;
-        //diviend.printPolynomial();
-        //divisor.printPolynomial();
         div(diviend, divisor, res, remain);
-        //cout<<"res = ";
         printMap(res);
-        //cout << "remain =";
         printMap(remain);
     }
 	/********** End **********/

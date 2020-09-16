@@ -12,7 +12,6 @@ public:
 
     friend void div(Polynomial &diviend, Polynomial &divisor, 
                     map<int, float> &res, map<int, float> &remain);
-    //friend void printPolynomial(const map<int, double> &m);
 private:
     map<int, double> saved;
     map<int, double> der;

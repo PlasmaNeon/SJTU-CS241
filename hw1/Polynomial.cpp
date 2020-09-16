@@ -15,15 +15,16 @@ Polynomial::Polynomial(string s){
     double coefficient = 0;
     int index = 0;
     int saved_symbol = 1;
-    // Check all polynomial string
-    //cout << "s = " << s << endl;
+    // Check all polynomial string chars
     while (i < len && isvalid){
         // meet '+' / '-', calculate prev.
         if(s[i] == '+' || s[i] == '-' ){
-            if (fabs(coefficient) > 0.00001)
-              saved[index] += coefficient;
+            if (fabs(coefficient) > 0.00001) 
+                // coefficienrt != 0
+                saved[index] += coefficient;
             if (fabs(saved[index]) < 0.00001)
-              saved.erase(index);
+                // coefficient == 0, remove from map.
+                saved.erase(index);
             if (s[i] == '+') coefficient = 1;
             if (s[i] == '-') coefficient = -1;
             i++;
@@ -33,6 +34,7 @@ Polynomial::Polynomial(string s){
             isvalid = false;
             break;
         }
+
         // Reach ends of string.
         if (i >= len) break;
         while (s[i] == '+')
@@ -42,7 +44,7 @@ Polynomial::Polynomial(string s){
             break;
         }
 
-        /* Process coefficient */
+        // Process coefficient.
         if (s[i] == 'x'){
             coefficient *= 1.0;
         }
@@ -71,6 +73,7 @@ Polynomial::Polynomial(string s){
             isvalid = false;
             break;
         }
+
         //Check if x exists, process index
         index = 0;
         if (s[i] == 'x'){
@@ -110,7 +113,7 @@ Polynomial::Polynomial(string s){
 void Polynomial::derivation(){
     for (auto &x : saved){
         if (x.first == 0){
-          continue;
+            continue;
         }
         der[x.first - 1] = x.first * x.second;
     }
@@ -120,15 +123,14 @@ double Polynomial::getValue(double x){
     double ans = 0;
     for (auto &i : saved){
         ans += i.second * pow(x, i.first);
-        //std::cout << "ans =" <<ans<<endl;
     }
     return ans;
 }
 
 void Polynomial::print(map<int, double> &m){
     cout << noshowpos;
-    for (auto x = m.rbegin(); x != m.rend() ; x++){
-        if (x!= m.rbegin())
+    for (auto x = m.rbegin(); x != m.rend(); x++){
+        if (x != m.rbegin())
             cout << showpos;
         if (x->first == 0){
             // if index = 0, const number
@@ -136,15 +138,6 @@ void Polynomial::print(map<int, double> &m){
             cout << fixed << setprecision(4) << ((double)tmp) / 10000;
         }
         else {
-            // if index != 0
-            // if coefficient = 1
-            // if (fabs(x->second - 1) <= 1e-6) {
-            //   if(x!=m.rbegin())
-            //     cout << '+';
-            // }
-            // else if (fabs(x->second +1) <= 1e-6)
-            //     cout << '-';
-            // else cout << fixed << setprecision(4) << x->second;
             int tmp = x->second * 10000;
             cout << fixed << setprecision(4) << ((double)tmp) / 10000;
             cout << 'x'; 
@@ -158,25 +151,25 @@ void Polynomial::print(map<int, double> &m){
 
 void Polynomial::printDerivation(){
     if(!isvalid){
-      cout << "error" << endl;
-      return;
+        cout << "error" << endl;
+        return;
     }
     derivation();
     if (der.empty())
         cout << "0.0000" << endl;
     else
-      print(der);
+        print(der);
 }
 
 void Polynomial::printPolynomial(){
     if(!isvalid){
-      cout << "error" << endl;
-      return;
+        cout << "error" << endl;
+        return;
     }
     if (saved.empty())
         cout << "0.0000" << endl;
     else
-      print(saved);
+        print(saved);
 }
 
 void Polynomial::printValueAtX(double x){
@@ -188,12 +181,7 @@ void Polynomial::printValueAtX(double x){
         int len = str.length();
         str.erase(len - 2);
         cout << str << endl;
-        //int tmp = val * 10000;
-        //cout << tmp <<endl;
-        //cout << noshowpos << fixed << setprecision(4) << ((double)tmp) / 10000 << endl;
-        //cout << noshowpos << fixed << setprecision(4) << val << endl;
     }
-
 }
 
 void div(Polynomial &diviend, Polynomial &divisor, 
@@ -203,15 +191,13 @@ void div(Polynomial &diviend, Polynomial &divisor,
         return;
     }
     if (diviend.saved.empty()){
-      res[0] = 0;
-      remain[0] = 0;
-      return;
+        res[0] = 0;
+        remain[0] = 0;
+        return;
     }
 
     auto divisor_hi = divisor.saved.rbegin(); // Highest index pointer in divisor
-    //cout << "divisor_hi" << divisor_hi->first <<endl;
     map<int, float> r; //save remain
-    //r = diviend.saved;
     for (auto x :diviend.saved)
         r[x.first] = (float) x.second;
     auto r_hi = r.rbegin();
@@ -221,29 +207,23 @@ void div(Polynomial &diviend, Polynomial &divisor,
         return;
     }
     while (!r.empty() && r_hi->first >= divisor_hi->first){
-        //cout << "r_hi->first = " << r_hi->first << "r_hi->second" << r_hi->second<<endl;
         float co_ = r_hi->second / divisor_hi->second; //Calculate coefficient multiple
         int index_ = r_hi->first - divisor_hi->first;  //Calculate index multiple
-        //cout << "co_ = " << co_ <<" index_ =" << index_ <<endl;
         if (index_ >=0){
             res[index_] = co_;  //Save to result
-            //r.erase(r_hi->first); 
-          // Calculate remain
-          for (auto x = divisor.saved.rbegin(); x != divisor.saved.rend(); x++){
-              r[x->first + index_] -= x->second * co_;
-              if (r.count(x->first + index_) && fabs(r[x->first + index_]) <= 1e-6) 
-                  r.erase(x->first + index_);
-          }
-          
+            // Calculate remain
+            for (auto x = divisor.saved.rbegin(); x != divisor.saved.rend(); x++){
+                r[x->first + index_] -= x->second * co_;
+                if (r.count(x->first + index_) && fabs(r[x->first + index_]) <= 1e-6) 
+                    r.erase(x->first + index_);
+            }
         }
         else break;
-        //printMap(r);
         if (!r.empty())
           r_hi = r.rbegin();  //Highest index pointer in remain
     }
-    //cout<<"here";
     if (r.empty())
-      remain[0] = 0;
+        remain[0] = 0;
     else remain = r;
 }
 
@@ -258,9 +238,7 @@ void printMap(const map<int, float> &m){
             if (x->second > 0)
                 str = '+' + str;
         }
-        
         if (x->first != 0){
-            
             cout << str;
             cout << 'x'; 
             if (x->first != 1)
