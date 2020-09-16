@@ -1,2 +1,2 @@
-# SJTU-CS241
-Solution for SJTU CS241.
+# Arandomname
+Solution for Arandomname
