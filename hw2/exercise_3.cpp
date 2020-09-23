@@ -16,13 +16,16 @@ int main()
     cin >> l >> r;
     Polynomial p(str);
     if (!p.isvalid || !ensureSecondDerivativeExists(p) || l >=r )
-        cout<<"error";
+        cout<<"error" << endl ;
     else{
       p.der = calcDerivation(p.saved);
       p.der2 = calcDerivation(p.der);
       float ans;
       if (newton(p, l, r, ans)){
         printFloat4c(ans);
+      }
+      else{
+        cout << "error" << endl;
       }
     }
     } else {

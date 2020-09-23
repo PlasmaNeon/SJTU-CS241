@@ -12,7 +12,7 @@ Polynomial::Polynomial(string s){
     int len = s.length();
     int i = 0;
     isvalid = true;
-    double coefficient = 0;
+    float coefficient = 0;
     int index = 0;
     int saved_symbol = 1;
     // Check all polynomial string chars
@@ -119,23 +119,23 @@ void Polynomial::derivation(){
     }
 }
 
-double Polynomial::getValue(double x){
-    double ans = 0;
+float Polynomial::getValue(float x){
+    float ans = 0;
     for (auto &i : saved){
         ans += i.second * pow(x, i.first);
     }
     return ans;
 }
 
-double getValue(map<int, double>& m, double x){
-    double ans = 0;
+float getValue(map<int, float>& m, float x){
+    float ans = 0;
     for (auto &i : m){
         ans += i.second * pow(x, i.first);
     }
     return ans;
 }
 
-void Polynomial::print(map<int, double> &m){
+void Polynomial::print(map<int, float> &m){
     cout << noshowpos;
     for (auto x = m.rbegin(); x != m.rend(); x++){
         if (x != m.rbegin())
@@ -143,11 +143,11 @@ void Polynomial::print(map<int, double> &m){
         if (x->first == 0){
             // if index = 0, const number
             int tmp = x->second * 10000;
-            cout << fixed << setprecision(4) << ((double)tmp) / 10000;
+            cout << fixed << setprecision(4) << ((float)tmp) / 10000;
         }
         else {
             int tmp = x->second * 10000;
-            cout << fixed << setprecision(4) << ((double)tmp) / 10000;
+            cout << fixed << setprecision(4) << ((float)tmp) / 10000;
             cout << 'x'; 
             if (x->first != 1)
                 cout << '^' << to_string(x->first);
@@ -180,11 +180,11 @@ void Polynomial::printPolynomial(){
         print(saved);
 }
 
-void Polynomial::printValueAtX(double x){
+void Polynomial::printValueAtX(float x){
     if (!isvalid)
         cout << "error" << endl;
     else {
-        double val = getValue(x);
+        float val = getValue(x);
         string str = to_string(val);
         int len = str.length();
         str.erase(len - 2);
@@ -269,8 +269,8 @@ bool ensureSecondDerivativeExists(Polynomial &p){
 
 
 
-map<int, double> calcDerivation(const map<int, double>& m){
-    map<int, double> derivation;
+map<int, float> calcDerivation(const map<int, float>& m){
+    map<int, float> derivation;
     for (auto& x : m){
         if (x.first == 0)
             continue;
@@ -284,57 +284,57 @@ bool newton(Polynomial& f, float a, float b,
     // Requires first derivation ans second derivation calculated in main().
 
     //Ensure f(a)f(b) < 0
-    double fa = getValue(f.saved, a);
-    double fb = getValue(f.saved, b);
-    if (fa > 0 && fb < 0 || fa < 0 && fb > 0){}
+    float fa = getValue(f.saved, a);
+    float fb = getValue(f.saved, b);
+    if (fa * fb < 0){}
     else {
-        cout << "error" << endl;
+        //cout << "error1" << endl;
         return false;
     }
 
     // Ensure a-f(a)/f'(a) <= b && b-f(b)/f'(b) >= a
-    double f1a = getValue(f.der, a);
-    double f1b = getValue(f.der, b);
-    if ((f1a != 0 && f1b !=0) && (a - fa/f1a <= b + 1e-7) && (b - fb/f1b >= a + 1e-7)){}
+    float f1a = getValue(f.der, a);
+    float f1b = getValue(f.der, b);
+    float f2a = getValue(f.der2, a);
+    float f2b = getValue(f.der2,b);
+    if (f1a * f1b > 0 && f2a * f2b > 0 &&
+        ((a - fa/f1a) <= (b + 1e-7)) && ((b - fb/f1b) >= (a + 1e-7))){}
     else {
-        cout << "error" << endl;
         return false;
     }
 
-
+    
     float x = a + (b - a) / 2;
-    if (fabs(getValue(f.saved, x)) <= 1e-6){
-        ans = x;
-        return false;
-    }
-    float fx = getValue(f.saved, x);
-    float f1x = getValue(f.der, x);
-    const bool is_f1x_pos = (f1x > 0);
-    float f2x = getValue(f.der2, x);
-    const bool is_f2x_pos = (f2x > 0);
 
-    while (1){
-        float x_tmp = x;
-        x = x - fx/f1x;
-        if (fabs(x_tmp - x) <= 1e-6){
+    int times = 10000;
+    float x_tmp, f1x_tmp, f2x_tmp;
+    f1x_tmp = getValue(f.der, x);
+    f2x_tmp = getValue(f.der2, x);
+    while (times > 0){
+        float fx = getValue(f.saved, x);
+        float f1x = getValue(f.der, x);
+        float f2x = getValue(f.der2, x);
+        //cout << "x" << x << " fx" << fx << " f1x" << f1x << " f2x" << f2x << endl;
+    
+        // Compare and check condition
+        if (!(f1x_tmp * f1x > 0 && f2x_tmp * f2x > 0))
+            return false;
+
+        if (fabs(fx / f1x) <= 1e-7){
             ans = x;
-            break;
+            return true;
         }
+        // Update x
+        x = x - fx / f1x;
+        times--;
 
-        f1x = getValue(f.der, x);
-        if (f1x == 0 || ((f1x > 0) != is_f1x_pos)){
-            cout << "error" << endl;
-            return false;
-        }
-        f2x = getValue(f.der2, x);
-        if ((f2x > 0) != is_f2x_pos){
-            cout << "error" << endl;
-            return false;
-        }
-        
-    }
+        // Save current vals.
+        x_tmp = x;
+        f1x_tmp = f1x;
+        f2x_tmp = f2x;
+    }    
 
-    return true;
+    return false;
 }
 
 void printFloat4c(float x){

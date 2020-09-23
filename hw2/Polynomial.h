@@ -4,16 +4,16 @@ using namespace std;
 class Polynomial{
 
 public:
-    map<int, double> saved;
-    map<int, double> der;
-    map<int, double> der2;
+    map<int, float> saved;
+    map<int, float> der;
+    map<int, float> der2;
     bool isvalid;
 
     Polynomial(string s);
-    double getValue(double x);
+    float getValue(float x);
     void printDerivation();
     void printPolynomial();
-    void printValueAtX(double x);
+    void printValueAtX(float x);
     
 
     friend void div(Polynomial &diviend, Polynomial &divisor, // Input
@@ -30,12 +30,12 @@ private:
             return true;
         else return false;
     }
-    void print(map<int, double>& m);
+    void print(map<int, float>& m);
     void derivation();
 };
 
 void printMap(const map<int, float>& m);
-map<int, double> calcDerivation(const map<int, double>& m);
-double getValue(map<int, double>& m, double x);
+map<int, float> calcDerivation(const map<int, float>& m);
+float getValue(map<int, float>& m, float x);
 
 void printFloat4c(float x);
