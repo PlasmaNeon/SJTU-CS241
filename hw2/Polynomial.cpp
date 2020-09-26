@@ -315,7 +315,6 @@ bool newton(Polynomial& f, float a, float b,
         float f1x = getValue(f.der, x);
         float f2x = getValue(f.der2, x);
         //cout << "x" << x << " fx" << fx << " f1x" << f1x << " f2x" << f2x << endl;
-    
         // Compare and check condition
         if (!(f1x_tmp * f1x > 0 && f2x_tmp * f2x > 0))
             return false;

@@ -10,11 +10,13 @@
         "Polynomial.h",
         "Polynomial.cpp",
         "exercise_3.cpp",
+        "LinearEquations.h",
+        "LinearEquations.cpp",
         "-o",
         "${fileDirname}/${fileBasenameNoExtension}"
       ],
       "options": {
-        "cwd": "${workspaceFolder}"
+        "cwd": "${workspaceFolder}/hw2"
       },
       "problemMatcher": [
         "$gcc"
