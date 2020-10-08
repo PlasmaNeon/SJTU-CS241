@@ -7,16 +7,12 @@
       "args": [
         "-g",
         "std_lib_facilities.h",
-        "Polynomial.h",
-        "Polynomial.cpp",
-        "exercise_3.cpp",
-        "LinearEquations.h",
-        "LinearEquations.cpp",
+        "exercise_4.cpp",
         "-o",
         "${fileDirname}/${fileBasenameNoExtension}"
       ],
       "options": {
-        "cwd": "${workspaceFolder}/hw2"
+        "cwd": "${workspaceFolder}/hw3"
       },
       "problemMatcher": [
         "$gcc"
