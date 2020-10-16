@@ -2,6 +2,8 @@
 //#include "Token_Exercise_1.h"
 //#include "Code_Exercise_2.h"
 #include<unordered_map>
+#include<unordered_set>
+#include<set>
 int main()
 {
     /********** Begin **********/
@@ -59,10 +61,23 @@ int main()
     }else{
     //第二关执行代码
     //Please fix Code_Exercise_2.h and Code_Exercise_2.cpp
-
-    cout<<"error";
+    set<string> kwds = {"alignas", "alignof", "and", "and_eq", "asm", "atomic_cancel", "atomic_commit", "atomic_noexcept",
+                                    "auto", "bitand", "bitor", "bool", "break", "case", "catch", "char",
+                                    "char8_t", "char16_t", "char32_t", "class", "compl", "concept", "const", "consteval",
+                                    "constexpr", "constinit", "const_cast", "continue", "co_await", "co_return", "co_yield", "decltype", 
+                                    "default", "define", "defined", "delete", "do", "double", "dynamic_cast", "elif", 
+                                    "else", "error", "endif", "enum", "explicit", "export", "extern", "false",
+                                    "final", "float", "for", "friend", "goto", "if", "ifdef", "ifndef",
+                                    "import", "include", "inline", "int", "line", "long", "module", "mutable", 
+                                    "namespace", "new", "noexcept", "not", "not_eq", "nullptr", "operator", "or",
+                                    "or_eq", "override", "pragma", "private", "protected", "public", "reflexpr", "register",
+                                    "reinterpret_cast", "requires","return", "short signed", "sizeof", "static", "static_assert",
+                                    "static_cast", "struct", "switch", "synchronized template", "this", "thread_local", "throw",
+                                    "xor_eq", "true", "try", "typedef", "typeid", "typename", "undef", "union",
+                                    "unsigned", "using", "virtual", "void", "volatile", "wchar_t", "while", "xor"};
+    
     }
 	/********** End **********/
-  	return 0;
+    return 0;
 }
 
