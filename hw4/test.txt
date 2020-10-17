@@ -1,0 +1,20 @@
+/******************************************************************************/
+/*! 
+hello
+*/
+/******************************************************************************/
+//Forward Declarations
+struct WEVec2;
+namespace WEInput
+/*Check if a specific key is being held down*/
+bool  IsPressed(WEKeyCode key);
+/*Check if a specific key was first touched this frame*/
+bool  IsTriggered(WEKeyCode key);
+/*Check if key is touched this frame and last frame*/
+bool  IsRepeating(WEKeyCode key);
+space.m
+space1.3
+space = 1.3;
+2space
+\n
+vector<vector<int>>
