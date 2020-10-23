@@ -7,12 +7,12 @@
       "args": [
         "-g",
         "std_lib_facilities.h",
-        "exercise_8.cpp",
+        "exercise_9.cpp",
         "-o",
         "${fileDirname}/${fileBasenameNoExtension}"
       ],
       "options": {
-        "cwd": "${workspaceFolder}/hw4"
+        "cwd": "${workspaceFolder}/hw5"
       },
       "problemMatcher": [
         "$gcc"
