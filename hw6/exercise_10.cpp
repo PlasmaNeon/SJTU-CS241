@@ -13,6 +13,7 @@ int main(){
         //第一关执行代码
         //Please fix NodeRecognition.h and NodeRecognition.cpp
         unordered_map<int, unordered_set<int>> g_; //  <from, to>
+        unordered_map<int, unordered_set<int>> rg_; // <to, from>
         vector<int> roots;
         string s;
         getline(cin, s);
@@ -32,7 +33,7 @@ int main(){
                         int to = stoi(buf.substr(0, pos));
                         int from = stoi(buf.substr(pos + 1));
                         g_[from].insert(to);
-                        //g_[to].push_back(from);
+                        rg_[to].insert(from);
                         // Undirected graph
                     } else {
                         int root = stoi(buf);
@@ -59,7 +60,7 @@ int main(){
     }
     for (int r : roots){ // Check all root first
         if (visited.count(r)) continue;
-        vector<int> res = checkHasRoot(g_, visited, r);
+        vector<int> res = checkHasRoot(g_, rg_, visited, r);
         int flag = res[0];
         if (flag == 1) 
             node_info.push_back({res[1], res[2]});
@@ -70,19 +71,11 @@ int main(){
         else if (flag == 4) 
             graph_info.push_back({res[1], res[2]});
     }
-    unordered_set<int> visited_bkup = visited;
-    // Process the parts that do not have "roots". 
-    for (auto kv : g_){
-        if (visited.count(kv.first)) continue;
-        // Modify the rest parts, make undirected graph
-        for (int child : kv.second){ 
-            g_[child].insert(kv.first);
-        }
-    }
+
 
     for (auto kv : g_){
         if (visited.count(kv.first)) continue;
-        vector<int> res = checkNoRoot(g_, visited, kv.first);
+        vector<int> res = checkNoRoot(g_, rg_, visited, kv.first);
         int flag = res[0];
         if (flag == 2) 
             btree_info.push_back({res[1], res[2]});
@@ -95,26 +88,10 @@ int main(){
         return ((a.first < b.first) || (a.first == b.first && a.second < b.second)); 
     };
     
-    if (node_info.size() > 1)
-        sort(node_info.begin(), node_info.end(), comp);
-    if (btree_info.size() > 1)
-        sort(btree_info.begin(), btree_info.end(), comp);
-    if (tree_info.size() > 1)
-        sort(tree_info.begin(), tree_info.end(), comp);
-    if (graph_info.size() > 1)
-        sort(graph_info.begin(), graph_info.end(), comp);
-
-    for (auto& p : node_info)
-        printNode(p.first, p.second);
-    for (auto& p : btree_info)
-        printBTree(p.first, p.second);
-    for (auto& p : tree_info)
-        printTree(p.first, p.second);
-    for (auto& p : graph_info)
-        printGraph(p.first, p.second);
-    
-
-
+    printInfo("Node", node_info);
+    printInfo("Binary tree", btree_info);
+    printInfo("Tree", tree_info);
+    printInfo("Graph", graph_info);
 
     } else {
         //第二关执行代码
