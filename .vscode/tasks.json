@@ -10,6 +10,8 @@
         "exercise_10.cpp",
         "NodeRecognition.h",
         "NodeRecognition.cpp",
+        "TreeConstruct.h",
+        "TreeConstruct.cpp",
         "-o",
         "${fileDirname}/${fileBasenameNoExtension}"
       ],

@@ -1,6 +1,6 @@
 #include "std_lib_facilities.h"
 #include "NodeRecognition.h"
-//#include "TreeConstruct.h"
+#include "TreeConstruct.h"
 #include<vector>
 #include<unordered_map>
 #include<sstream>
@@ -8,7 +8,7 @@
 #include<functional>
 
 int main(){
-    bool exercise_1=true;
+    bool exercise_1 = false;
     if(exercise_1){
         //第一关执行代码
         //Please fix NodeRecognition.h and NodeRecognition.cpp
@@ -96,6 +96,34 @@ int main(){
     } else {
         //第二关执行代码
         //Please fix TreeConstruct.h and TreeConstruct.cpp
+        string s;
+        getline(cin, s);
+        
+        Graph g1_; //  <from, to>
+        Graph rg1_; // <to, from>
+        char root1 = processInput(s, g1_, rg1_);
+        if (root1 == ' ') 
+            checkTree(g1_, rg1_, root1);
+        int d1 = checkTree(g1_, rg1_, root1);
+
+        getline(cin, s);
+        Graph g2_;
+        Graph rg2_;
+        char root2 = processInput(s, g2_, rg2_);
+        if (root2 == ' ')
+            checkTree(g2_, rg2_, root2);
+        int d2 = checkTree(g2_, rg2_, root2);
+        
+        cout << d1 << ' ' << d2 << endl;
+        string s1 = constructAHU(g1_, root1);
+        string s2 = constructAHU(g2_, root2);
+
+        cout << s1 << ' ' << s2 << endl;
+        
+        if (s1 == s2)
+            cout << "Yes" << endl;
+        else cout << "No" << endl;
+
 
 
     }
