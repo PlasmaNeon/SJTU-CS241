@@ -25,8 +25,17 @@ void eval(string file_name, DiGraph& dg){
     int start, end, weight;
     while (getline(ifs, s)){
         start = end = weight = -1;
+        s = s.substr(1);
+        s.pop_back();
         istringstream ss(s);
-        if (ss >> start >> end >> weight){
+        string sstart, send, sw;
+        getline(ss, sstart, ',');
+        getline(ss, send, ',');
+        getline(ss, sw);
+        start = (sstart.size() ? stoi(sstart) : -1);
+        end = (send.size() ? stoi(send) : -1);
+        weight = (sw.size() ? stoi(sw) : -1);
+        //if (ss >> start >> end >> weight){
             if (start == -1) continue;
             dg.nodes.insert(start);
             if (end == -1) {
@@ -37,7 +46,7 @@ void eval(string file_name, DiGraph& dg){
             if (dg.edges[start][end])
                 cout << "Duplicate insert, overwrite it." << endl;
             dg.edges[start][end] = weight;
-        }
+        //}
     }
     cout << "The graph has " << dg.nodes.size() << " nodes." << endl;
     ifs.close();
@@ -46,28 +55,29 @@ void eval(string file_name, DiGraph& dg){
 void save(string file_name, DiGraph& dg){
     ofstream ofs(file_name);
     for (auto& node : dg.nodes) {
-        if (!dg.edges.count(node)) ofs << node << endl;
+        if (!dg.edges.count(node)) ofs << '<' << node << '>' << endl;
         else {
             for (auto&[d, w] : dg.edges[node])
-                ofs << node << ' ' << d << ' ' << w << endl;
+                ofs << '<' << node << ',' << d << ',' << w << '>' << endl;
         }
     }
     cout << "Succeed to save the graph into " << file_name << endl;
     ofs.close();
 }
 
-void saveCutResult(){
-    cout << "Input save filename prefix: ";
+void saveCutResult(string file_name_prefix){
+    /*cout << "Input save filename prefix: ";
     string s;
-    cin >> s;
+    cin >> s;*/
     for (int i = 0; i < ans.size(); ++i) {
         //cout << ans[i].nodes.size() << endl;
-        save(s + to_string(i) + ".txt", ans[i]);
+        save(file_name_prefix + '_' + to_string(i) + ".txt", ans[i]);
     }
-    ofstream ofs(s + "_deleted.txt");
+
+    ofstream ofs(file_name_prefix + "_deleted.txt");
     for (auto& d : deleted_edges)
         ofs << d[0] << ' ' << d[1] << ' ' << d[2] << endl;
-
+    ofs.close();
 }
 
 void generateRandomGraph(DiGraph& dg){
@@ -381,14 +391,16 @@ int main(int argc, char **argv){
     bool graph_imported_flag;
     //usage();
     string fname;
+    string sname;
+    string aname;
     while (1){
         cout << "> ";
         cin >> c;
         switch (c){
             case 's':
                 cout << "Input save file name: ";
-                cin >> fname;
-                save(fname, dg);
+                cin >> sname;
+                save(sname, dg);
                 break;
             case 'g':
                 generateRandomGraph(dg);
@@ -406,8 +418,8 @@ int main(int argc, char **argv){
                 break;
             case 'a':
                 cout << "Input filename to be appended: ";
-                cin >> fname;
-                appendToGraph(fname, dg);
+                cin >> aname;
+                appendToGraph(aname, dg);
                 break;
             case 'c':
                 if (!graph_imported_flag)
@@ -418,7 +430,7 @@ int main(int argc, char **argv){
                     cin >> max_node;
                     cutGraph(dg, max_node);
                     cout << "Done." << endl;
-                    saveCutResult();
+                    saveCutResult(fname);
                 }
                 break;
             case 'd':

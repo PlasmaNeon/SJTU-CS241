@@ -59,7 +59,7 @@ void save(string file_name, DiGraph& dg);
 /*
  * Save cut result after applying min-cut algorithm.
  */
-void saveCutResult();
+void saveCutResult(string file_name_prefix);
 
 /*
  * Generate a random graph by setting numbers of nodes and edge weight ranges.
