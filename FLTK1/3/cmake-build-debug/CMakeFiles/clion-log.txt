@@ -1,0 +1,15 @@
+/snap/clion/129/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/plasma/CLionProjects/hwFLTK/3
+CMake Warning (dev) at /snap/clion/129/bin/cmake/linux/share/cmake-3.17/Modules/FindPackageHandleStandardArgs.cmake:272 (message):
+  The package name passed to `find_package_handle_standard_args` (X11) does
+  not match the name of the calling package (FLTK).  This can lead to
+  problems in calling code that expects `find_package` result variables
+  (e.g., `_FOUND`) to follow a certain pattern.
+Call Stack (most recent call first):
+  /snap/clion/129/bin/cmake/linux/share/cmake-3.17/Modules/FindX11.cmake:366 (find_package_handle_standard_args)
+  /snap/clion/129/bin/cmake/linux/share/cmake-3.17/Modules/FindFLTK.cmake:98 (include)
+  CMakeLists.txt:26 (find_package)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/plasma/CLionProjects/hwFLTK/3/cmake-build-debug
